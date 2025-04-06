@@ -68,39 +68,44 @@
 // )
       
 // }
-import { lazy } from "react";
+import { lazy,   useContext } from "react";
 import { useState } from "react";
+import { CountContext } from "./context";
 
 function App(){
   const [count,setCount]=useState(0);
 return (
   <div>
-    <Count count={count} setCount={setCount}/>
-
+<CountContext.Provider value={{count,setCount}} >
+<Count />
+</CountContext.Provider>
   </div>
 )
 }
 
-function Count({count,setCount}){
+function Count(){
+
   return <div>
-   <CountRender Count={count}></CountRender>
-     <Buttons count={count} setCount={setCount}/>
+   <CountRender ></CountRender>
+     <Buttons  />
   </div>
 }
-function CountRender({count}){
-  return <div>
-    {count}
+function CountRender(){
+  const {count}=useContext(CountContext)
+  return <div> 
+    count:{count}
   </div>
 }
 
-function Buttons({count,setCount}){
-  return <div>
+function Buttons(){
+  const {count,setCount}=useContext(CountContext)
+  return (<div>
      <button onClick={()=>{
 setCount(count+1)
      }}>Increase</button> 
      <button onClick={()=>{
       setCount(count-1)
      }}>decrease</button>
-  </div>
+  </div>);
 }
 export default App;
