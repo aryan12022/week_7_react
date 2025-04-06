@@ -68,44 +68,39 @@
 // )
       
 // }
+import { lazy } from "react";
+import { useState } from "react";
 
-import React, { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
-import './App.css';
+function App(){
+  const [count,setCount]=useState(0);
+return (
+  <div>
+    <Count count={count} setCount={setCount}/>
 
-// Lazy-loaded components//lazy loading for optimisation//always suspense is added
-const Dashboard = lazy(() => import('./components/Dashboard'));
-const Landing = lazy(() => import('./components/Landing'));
-
-function App() {
-  return (
-    <div>
-      <div style={{ background: 'black', color: 'white' }}>
-        Hi this is topbar
-      </div>
-      <BrowserRouter>
-        <Appbar />
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/" element={<Landing />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </div>
-  );
+  </div>
+)
 }
 
-// Appbar with UK spelling, keeping navigation inside Router
-function Appbar() {
-  const navigate = useNavigate();
-
-  return (
-    <div>
-      <button onClick={() => navigate('/')}>Landing Page</button>
-      <button onClick={() => navigate('/dashboard')}>Dashboard</button>
-    </div>
-  );
+function Count({count,setCount}){
+  return <div>
+   <CountRender Count={count}></CountRender>
+     <Buttons count={count} setCount={setCount}/>
+  </div>
+}
+function CountRender({count}){
+  return <div>
+    {count}
+  </div>
 }
 
+function Buttons({count,setCount}){
+  return <div>
+     <button onClick={()=>{
+setCount(count+1)
+     }}>Increase</button> 
+     <button onClick={()=>{
+      setCount(count-1)
+     }}>decrease</button>
+  </div>
+}
 export default App;
