@@ -1,9 +1,25 @@
  
  
  
- export  function Dashboard() {
+ export default function Dashboard() {
  return   <div>
-    hi ia mdasdksgj
-    </div>
+Dashboard Page
+<Boldify>
+    hi there
+</Boldify>
+<Boldify>
+    hi there
+</Boldify>
+<Boldify>
+    hi there
+</Boldify>
+</div>
+
+}
+
+function Boldify({children}){
+    return <b>
+        {children}
+    </b>
 }
 

@@ -69,26 +69,34 @@
       
 // }
 
-
-
-import { BrowserRouter, Routes, Route ,useNavigate} from 'react-router-dom';
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
-import { Dashboard } from './components/Dashboard';
-import { Landing } from './components/Landing';
+
+// Lazy-loaded components//lazy loading for optimisation//always suspense is added
+const Dashboard = lazy(() => import('./components/Dashboard'));
+const Landing = lazy(() => import('./components/Landing'));
 
 function App() {
   return (
-    <BrowserRouter>
-      <Appbar />
-      <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/" element={<Landing />} />
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <div style={{ background: 'black', color: 'white' }}>
+        Hi this is topbar
+      </div>
+      <BrowserRouter>
+        <Appbar />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Landing />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </div>
   );
 }
 
-// Appbar with correct useNavigate hook usage
+// Appbar with UK spelling, keeping navigation inside Router
 function Appbar() {
   const navigate = useNavigate();
 
