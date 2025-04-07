@@ -68,7 +68,7 @@
 // )
       
 // }
-import { lazy,   useContext } from "react";
+import {   useContext } from "react";
 import { useState } from "react";
 import { CountContext } from "./context";
 
@@ -77,7 +77,7 @@ function App(){
 return (
   <div>
 <CountContext.Provider value={{count,setCount}} >
-<Count />
+<Count /> 
 </CountContext.Provider>
   </div>
 )
