@@ -68,44 +68,98 @@
 // )
       
 // }
-import {   useContext } from "react";
-import { useState } from "react";
-import { CountContext } from "./context";
+// import {   useContext } from "react";
+// import { useState } from "react";
+// import { CountContext } from "./context";
 
-function App(){
-  const [count,setCount]=useState(0);
-return (
-  <div>
-<CountContext.Provider value={{count,setCount}} >
-<Count /> 
-</CountContext.Provider>
-  </div>
-)
+// function App(){
+//   const [count,setCount]=useState(0);
+// return (
+//   <div>
+// <CountContext.Provider value={{count,setCount}} >
+// <Count /> 
+// </CountContext.Provider>
+//   </div>
+// )
+// }
+
+// function Count(){
+
+//   return <div>
+//    <CountRender ></CountRender>
+//      <Buttons  />
+//   </div>
+// }
+// function CountRender(){
+//   const {count}=useContext(CountContext)
+//   return <div> 
+//     count:{count}
+//   </div>
+// }
+
+// function Buttons(){
+//   const {count,setCount}=useContext(CountContext)
+//   return (<div>
+//      <button onClick={()=>{
+// setCount(count+1)
+//      }}>Increase</button> 
+//      <button onClick={()=>{
+//       setCount(count-1)
+//      }}>decrease</button>
+//   </div>);
+// }
+// export default App;
+
+
+
+//////RECOIL///////
+
+import React, { useState } from 'react';
+import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
+import { countAtom } from './store/atoms/count.jsx'; // Ensure correct path
+
+function App() {
+  return (
+ 
+      <Count />
+   
+  );
 }
 
-function Count(){
+function Count() {
+  return (
+    <div>   
+      <RecoilRoot>
+      <CountRender />
+      <Buttons />
+      </RecoilRoot>
 
+    </div>
+  );
+}
+
+function Input(){
+  const [inputValue,setInputValue]=useState("")
   return <div>
-   <CountRender ></CountRender>
-     <Buttons  />
-  </div>
-}
-function CountRender(){
-  const {count}=useContext(CountContext)
-  return <div> 
-    count:{count}
+    <input onChange={(e)=>{
+   setInputValue(e.target.value)
+    }} />
   </div>
 }
 
-function Buttons(){
-  const {count,setCount}=useContext(CountContext)
-  return (<div>
-     <button onClick={()=>{
-setCount(count+1)
-     }}>Increase</button> 
-     <button onClick={()=>{
-      setCount(count-1)
-     }}>decrease</button>
-  </div>);
+function CountRender() {
+  const count = useRecoilValue(countAtom); // Get the current count value
+  return <div>{count}</div>;
 }
+
+function Buttons() {
+  const [count, setCount] = useRecoilState(countAtom); // Get the current count and setter
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+      <button onClick={() => setCount(count - 1)}>Decrease</button>
+    </div>
+  );
+}
+
 export default App;
